@@ -4,7 +4,6 @@
  
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace PrecMaths
@@ -35,7 +34,7 @@ namespace PrecMaths
             this.Denominator = Denominator;
             if (this.Denominator == 0)
             {
-                throw new InvalidOperationException("the denominator can't be zero")
+                throw new InvalidOperationException("the denominator can't be zero");
             }
         }
         /// <summary>
@@ -67,7 +66,7 @@ namespace PrecMaths
             this.Denominator = Denominator;
             if (this.Denominator == 0)
             {
-                throw new InvalidOperationException("the denominator can't be zero")
+                throw new InvalidOperationException("the denominator can't be zero");
             }
         }
         /// <summary>
