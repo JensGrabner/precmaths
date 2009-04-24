@@ -95,22 +95,7 @@ namespace PrecMaths
         /// <returns>the number as a double</returns>
         public double Evaluate()
         {
-            Int64 n = Numerator;
-            string result = "";
-            if (n < 0)
-            {
-                result += "-";
-            }
-            for (int i = 0; i < 64; i++)
-            {
-                result += (Math.Abs(n) / this.Denominator);
-                if (i == 0)
-                {
-                    result += ".";
-                }
-                n = Math.Abs(n % this.Denominator) * 10;
-            }
-            return double.Parse(result);
+            return Evaluate(64);
         }
         /// <summary>
         /// evaluates the rational as a string
