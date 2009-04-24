@@ -139,7 +139,7 @@ namespace PrecMaths
                 for (int i = 0; i < top.Length; i++)
                 {
                     padding += "-";
-                    if (i % 2 == 1)
+                    if (i % 2 == 1 && i != 1)
                     {
                         bottom = " " + bottom;
                     }
@@ -148,7 +148,8 @@ namespace PrecMaths
             else if (top.Length < bottom.Length){
                 for (int i =0; i<bottom.Length;i++){
                     padding += "-";
-                    if (i%2==1){
+                    if (i % 2 == 1 && i != 1)
+                    {
                         top = " " + top;
                     }
                 }
