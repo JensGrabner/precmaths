@@ -139,20 +139,23 @@ namespace PrecMaths
                 for (int i = 0; i < top.Length; i++)
                 {
                     padding += "-";
-                    if (i % 2 == 1 && i != 1)
-                    {
-                        bottom = " " + bottom;
-                    }
+                }
+                int delta = top.Length - bottom.Length;
+                for (int i = 0; i < delta / 2; i++)
+                {
+                    bottom = " " + bottom;
                 }
             }
             else if (top.Length < bottom.Length){
                 for (int i =0; i<bottom.Length;i++){
                     padding += "-";
-                    if (i % 2 == 1 && i != 1)
-                    {
-                        top = " " + top;
-                    }
                 }
+                int delta = bottom.Length - top.Length;
+                for (int i = 0; i < delta / 2; i++)
+                {
+                    top = " " + top;
+                }
+
             }
             else {
                 for (int i =0;i<bottom.Length;i++){
