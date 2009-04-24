@@ -178,8 +178,18 @@ namespace PrecMaths
             }
             gcd = a;
             this.Numerator = this.Numerator / a;
+            
             this.Denominator = this.Denominator / a;
-
+            if (this.Numerator < 0 && this.Denominator < 0)
+            {
+                this.Numerator = Math.Abs(this.Numerator);
+                this.Denominator = Math.Abs(this.Denominator);
+            }
+            else if (this.Denominator < 0)
+            {
+                this.Numerator *= -1;
+                this.Denominator *= -1;
+            }
             
         }
         /// <summary>
