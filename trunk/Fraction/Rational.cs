@@ -132,12 +132,33 @@ namespace PrecMaths
         public string PrettyPrint()
         {
             string top = this.Numerator.ToString();
-            string bottom = this.Numerator.ToString();
+            string bottom = this.Denominator.ToString();
+            string padding = "";
             if (top.Length > bottom.Length)
             {
-
+                for (int i = 0; i < top.Length; i++)
+                {
+                    padding += "-";
+                    if (i % 2 == 1)
+                    {
+                        bottom = " " + bottom;
+                    }
+                }
             }
-            return this.Numerator.ToString() + "/" + this.Denominator.ToString();
+            else if (top.Length < bottom.Length){
+                for (int i =0; i<bottom.Length;i++){
+                    padding += "-";
+                    if (i%2==1){
+                        top = " " + top;
+                    }
+                }
+            }
+            else {
+                for (int i =0;i<bottom.Length;i++){
+                    padding += "-";
+                }
+            }
+            return top+"\n"+padding+"\n"+bottom;
         }
         /// <summary>
         /// converts the number to a string
