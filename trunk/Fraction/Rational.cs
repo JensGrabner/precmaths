@@ -213,6 +213,14 @@ namespace PrecMaths
         public static Rational operator +(Rational a, Rational b)
         {
             Int64 commonbase = a.Denominator * b.Denominator;
+            if (a.Numerator == 0)
+            {
+                return b;
+            }
+            if (b.Numerator == 0)
+            {
+                return a;
+            }
             Int64 top = (a.Numerator * b.Denominator)+(b.Numerator*b.Denominator);
             Rational result = new Rational(top, commonbase);
             result.Reduce();
@@ -220,6 +228,14 @@ namespace PrecMaths
         }
         public static Rational operator -(Rational a, Rational b)
         {
+            if (a.Numerator == 0)
+            {
+                return -1 * b;
+            }
+            if (b.Numerator == 0)
+            {
+                return a;
+            }
             Int64 commonbase = a.Denominator * b.Denominator;
             Int64 top = (a.Numerator * b.Denominator) - (b.Numerator * a.Denominator);
             Rational result = new Rational(top, commonbase);
