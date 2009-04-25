@@ -239,7 +239,7 @@ namespace PrecMaths
             {
                 return a;
             }
-            Int64 top = (a.Numerator * b.Denominator)+(b.Numerator*b.Denominator);
+            Int64 top = (a.Numerator * b.Denominator)+(b.Numerator*a.Denominator);
             Rational result = new Rational(top, commonbase);
             result.Reduce();
             return result;
