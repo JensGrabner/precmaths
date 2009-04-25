@@ -177,7 +177,6 @@ namespace PrecMaths
         /// </summary>
         public void Reduce()
         {
-            Int64 gcd;
             Int64 a = this.Numerator;
             Int64 b = this.Denominator;
             while (b != 0)
@@ -186,7 +185,6 @@ namespace PrecMaths
                 b = a % b;
                 a = t;
             }
-            gcd = a;
             this.Numerator = this.Numerator / a;
             
             this.Denominator = this.Denominator / a;
