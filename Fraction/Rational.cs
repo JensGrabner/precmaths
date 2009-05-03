@@ -16,11 +16,11 @@ namespace PrecMaths
         /// <summary>
         /// The numerator of the rational number
         /// </summary>
-        private Int64 Numerator;
+        public Int64 Numerator;
         /// <summary>
         /// The denominator of the rational number
         /// </summary>
-        private Int64 Denominator;
+        public Int64 Denominator;
         
         /// <summary>
         /// this creates a new rational number,
@@ -44,7 +44,7 @@ namespace PrecMaths
         public Rational(int Numerator)
         {
             this.Numerator = Numerator;
-            this.Denominator = 1;
+            this.Denominator = 1L;
         }
         /// <summary>
         /// this initialises the numerator and sets the denominator to one
@@ -53,7 +53,7 @@ namespace PrecMaths
         public Rational(Int64 Numerator)
         {
             this.Numerator = Numerator;
-            this.Denominator = 1;
+            this.Denominator = 1L;
         }
         /// <summary>
         /// this initialises the numerator and denominator
@@ -320,11 +320,11 @@ namespace PrecMaths
         }
         public override bool Equals(object obj)
         {
-            if (obj.GetType() == this.GetType())
+            if (obj.GetType() == 1.GetType())
             {
-                return this == (Rational)obj;
+                return (int)obj == this;
             }
-            return false;
+            return (Rational)obj == this;
             
         }
         public override int GetHashCode()
