@@ -129,6 +129,11 @@ namespace RationalTests
             r1.Reduce();
             Assert.AreEqual(1, r1.Numerator);
             Assert.AreEqual(1, r1.Denominator);
+            r1 = new Rational(3, 9);
+            r1.Reduce();
+            Assert.AreEqual(1, r1.Numerator);
+            Assert.AreEqual(3, r1.Denominator);
+
             
         }
         [Test]
@@ -151,5 +156,11 @@ namespace RationalTests
             Assert.That(r1 < 6L); 
 
         }
+        [Test]
+        public void RationalEvaluate()
+        {
+            Assert.AreEqual(1.0 / 7.0, new Rational(1, 7).Evaluate());
+        }
+        
     }
 }

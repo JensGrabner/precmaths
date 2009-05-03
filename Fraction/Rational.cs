@@ -72,30 +72,10 @@ namespace PrecMaths
         /// <summary>
         /// evaluates the rational as a double
         /// </summary>
-        /// <param name="nprec">the precision to evaluate to</param>
-        /// <returns>the number as a double</returns>
-        public double Evaluate(int nprec){
-            Int64 n = Numerator;
-            string result = "";
-            for (int i = 0; i < nprec; i++)
-            {
-                result += (n/this.Denominator);
-                if (i == 0)
-                {
-                    result += ".";
-                }
-                n = Math.Abs(n % this.Denominator)*10;
-            }
-            return double.Parse(result);
-
-        }
-        /// <summary>
-        /// evaluates the rational as a double
-        /// </summary>
         /// <returns>the number as a double</returns>
         public double Evaluate()
         {
-            return Evaluate(64);
+            return (double)this.Numerator / (double)this.Denominator;
         }
         /// <summary>
         /// evaluates the rational as a string
