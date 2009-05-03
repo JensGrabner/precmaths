@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mono.Math;
 
-namespace Fraction
+namespace PrecMaths
 {
     public class SignedBigInteger
     {
@@ -189,7 +189,7 @@ namespace Fraction
             {
                 SignedBigInteger c = b.Clone();
                 c.Negative = false;
-                return a + b;
+                return a + c;
             }
             else if (a.Negative)
             {
