@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using System.Text;
 using PrecMaths;
+using NUnit.Framework;
 
 namespace FracTests
 {
-    class Program
+    [TestFixture]
+    class TestRunner
     {
-        static void Main(string[] args)
+        [Test]
+        public void FracInitialiseFromInt()
         {
-            Rational r_1 = new Rational(409813082319810617,-122332313750680800);
-            Rational r_2 = new Rational(1, 44);
-            r_1 -= r_2;
-            Console.WriteLine(r_1.PrettyPrint());
-            Console.ReadLine();
-            
+            Rational r = 4;
+            Assert.AreEqual(r.Numerator, 4);
+            Assert.AreEqual(r.Denominator, 1);
+        }
+        public void FracInitialiseFromLong()
+        {
+            Rational r = (long)12388888888888;
+            Assert.AreEqual(r.Numerator, (long)12388888888888);
+            Assert.AreEqual(r.Denominator, 1);
+
         }
     }
 }
