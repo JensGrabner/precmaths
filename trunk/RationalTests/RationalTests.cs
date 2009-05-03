@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using System.Text;
 using PrecMaths;
+using Mono.Math;
 
 namespace RationalTests
 {
@@ -181,6 +182,75 @@ namespace RationalTests
         public void InitialseZeroLongDenominator()
         {
             Rational r = new Rational(1L, 0L);
+        }
+    }
+    [TestFixture]
+    public class SignedBigIntegerTests
+    {
+        [Test]
+        public void InitialiseFromInt()
+        {
+            SignedBigInteger e = new SignedBigInteger(1);
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(1), e.Number);
+            e = new SignedBigInteger(-4);
+            Assert.AreEqual(true, e.Negative);
+            Assert.AreEqual(new BigInteger(4), e.Number);
+        }
+        [Test]
+        public void MultiplicationTest()
+        {
+            SignedBigInteger e = new SignedBigInteger(1);
+            e *= 4;
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(4), e.Number);
+            e *= -1;
+            Assert.AreEqual(true, e.Negative);
+            Assert.AreEqual(new BigInteger(4), e.Number);
+            e *= e;
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(16), e.Number);
+        }
+        [Test]
+        public void AdditionTest()
+        {
+            SignedBigInteger e = new SignedBigInteger(2);
+            e += e;
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(4), e.Number);
+            e += new SignedBigInteger(-6);
+            Assert.AreEqual(true, e.Negative);
+            Assert.AreEqual(new BigInteger(2), e.Number);
+            e += 3;
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(1), e.Number);
+        }
+        [Test]
+        public void SubtractionTest()
+        {
+            SignedBigInteger e = new SignedBigInteger(2);
+            e -= 2;
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(0), e.Number);
+            e = new SignedBigInteger(4);
+            e -= new SignedBigInteger(-6);
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(10), e.Number);
+            e -= 14;
+            Assert.AreEqual(true, e.Negative);
+            Assert.AreEqual(new BigInteger(4), e.Number);
+        }
+        [Test]
+        public void DivisionTest()
+        {
+            SignedBigInteger e = new SignedBigInteger(24);
+            e = e / 6;
+            Assert.AreEqual(false, e.Negative);
+            Assert.AreEqual(new BigInteger(4), e.Number);
+            e = new SignedBigInteger(24);
+            e = e / -8;
+            Assert.AreEqual(true, e.Negative);
+            Assert.AreEqual(new BigInteger(3), e.Number);
         }
     }
 }
