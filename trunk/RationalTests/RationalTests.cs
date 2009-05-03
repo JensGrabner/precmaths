@@ -161,6 +161,26 @@ namespace RationalTests
         {
             Assert.AreEqual(1.0 / 7.0, new Rational(1, 7).Evaluate());
         }
-        
+        [Test]
+        public void RationalErrors()
+        {
+            Assert.Throws<InvalidOperationException>(new TestDelegate(InitialiseZeroDenominator));
+            Assert.Throws<InvalidOperationException>(new TestDelegate(InitialseZeroLongDenominator));
+            Assert.Throws<InvalidOperationException>(new TestDelegate(DivideByZero));
+
+        }
+        public void DivideByZero()
+        {
+            Rational r = new Rational(4);
+            r /= 0;
+        }
+        public void InitialiseZeroDenominator()
+        {
+            Rational r = new Rational(1, 0);
+        }
+        public void InitialseZeroLongDenominator()
+        {
+            Rational r = new Rational(1L, 0L);
+        }
     }
 }
