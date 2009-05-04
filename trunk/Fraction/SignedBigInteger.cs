@@ -18,6 +18,15 @@ namespace PrecMaths
             }
             this.Number = new BigInteger(a);
         }
+        public SignedBigInteger(long a)
+        {
+            if (a < 0)
+            {
+                this.Negative = true;
+                a *= -1;
+            }
+            this.Number = new BigInteger((ulong)a);
+        }
         public SignedBigInteger(BigInteger a)
         {
             this.Negative = false;
@@ -33,6 +42,14 @@ namespace PrecMaths
             return new SignedBigInteger(this.Number, this.Negative);
         }
         public static implicit operator SignedBigInteger(int a)
+        {
+            return new SignedBigInteger(a);
+        }
+        public static implicit operator SignedBigInteger(long a)
+        {
+            return new SignedBigInteger(a);
+        }
+        public static implicit operator SignedBigInteger(BigInteger a)
         {
             return new SignedBigInteger(a);
         }
@@ -179,6 +196,25 @@ namespace PrecMaths
 
             }
             return new SignedBigInteger(number, neg);
+        }
+        public static SignedBigInteger operator %(SignedBigInteger a, SignedBigInteger b)
+        {
+            if (b <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else
+            {
+                if (a >= 0)
+                {
+                    return new SignedBigInteger(a.Number % b.Number);
+                }
+                else
+                {
+                    return b.Number - a.Number % b.Number;
+                }
+            }
+            
         }
         public static SignedBigInteger operator -(SignedBigInteger a, SignedBigInteger b)
         {
