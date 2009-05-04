@@ -8,8 +8,8 @@
     <ProjectGuid>{8F04D2A4-2466-4D5B-9165-6FCFFAE5CD42}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fraction</RootNamespace>
-    <AssemblyName>Fraction</AssemblyName>
+    <RootNamespace>PrecMaths</RootNamespace>
+    <AssemblyName>PrecMaths</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>

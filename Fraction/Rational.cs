@@ -13,303 +13,131 @@ namespace PrecMaths
     /// </summary>
     public class Rational
     {
-        /// <summary>
-        /// The numerator of the rational number
-        /// </summary>
-        public Int64 Numerator;
-        /// <summary>
-        /// The denominator of the rational number
-        /// </summary>
-        public Int64 Denominator;
-        
-        /// <summary>
-        /// this creates a new rational number,
-        /// with a numerator and a denominator
-        /// </summary>
-        /// <param name="Numerator">The numerator</param>
-        /// <param name="Denominator">The denominator</param>
-        public Rational(int Numerator, int Denominator)
+        public SignedBigInteger Numerator;
+        public SignedBigInteger Denominator;
+        public Rational(SignedBigInteger Numerator, SignedBigInteger Denominator)
         {
-            this.Numerator = Numerator;
-            this.Denominator = Denominator;
+            this.Numerator = Numerator.Clone();
+            this.Denominator = Denominator.Clone();
             if (this.Denominator == 0)
             {
-                throw new InvalidOperationException("the denominator can't be zero");
+                throw new ArgumentOutOfRangeException("denominators of rationals cannot be zero");
             }
         }
-        /// <summary>
-        /// this initialises the numerator and sets the denominator to one
-        /// </summary>
-        /// <param name="Numerator">The numerator of the rational number</param>
-        public Rational(int Numerator)
+        public Rational(SignedBigInteger Numerator)
         {
-            this.Numerator = Numerator;
-            this.Denominator = 1L;
+            this.Numerator = Numerator.Clone();
+            this.Denominator = 1;
         }
-        /// <summary>
-        /// this initialises the numerator and sets the denominator to one
-        /// </summary>
-        /// <param name="Numerator">The numerator of the rational number</param>
-        public Rational(Int64 Numerator)
-        {
-            this.Numerator = Numerator;
-            this.Denominator = 1L;
-        }
-        /// <summary>
-        /// this initialises the numerator and denominator
-        /// </summary>
-        /// <param name="Numerator">the numerator</param>
-        /// <param name="Denominator">the denominator</param>
-        public Rational(Int64 Numerator, Int64 Denominator)
-        {
-            this.Numerator = Numerator;
-            this.Denominator = Denominator;
-            if (this.Denominator == 0)
-            {
-                throw new InvalidOperationException("the denominator can't be zero");
-            }
-        }
-        /// <summary>
-        /// evaluates the rational as a double
-        /// </summary>
-        /// <returns>the number as a double</returns>
-        public double Evaluate()
-        {
-            return (double)this.Numerator / (double)this.Denominator;
-        }
-        /// <summary>
-        /// evaluates the rational as a string
-        /// </summary>
-        /// <param name="nprec">the precision to evaluate to</param>
-        /// <returns>the number as a string</returns>
-        public string EvaluateString(int nprec)
-        {
-            Int64 n = Numerator;
-            string result = "";
-            if (n < 0)
-            {
-                result += "-";
-            }
-            n = Math.Abs(n);
-            for (int i = 0; i <= nprec; i++)
-            {
-                result += (n / this.Denominator);
-
-                if (i == 0)
-                {
-                    result += ".";
-                }
-                n = Math.Abs(n % this.Denominator) * 10;
-            }
-            return result;
-
-        }
-        /// <summary>
-        /// creates a pretty version of the number
-        /// </summary>
-        /// <returns>a string that represents the number</returns>
-        //TODO: make this print on three lines with a line of dashes in the middle
-        public string PrettyPrint()
-        {
-            string top = this.Numerator.ToString();
-            string bottom = this.Denominator.ToString();
-            string padding = "";
-            if (top.Length > bottom.Length)
-            {
-                for (int i = 0; i < top.Length; i++)
-                {
-                    padding += "-";
-                }
-                int delta = top.Length - bottom.Length;
-                for (int i = 0; i < delta / 2; i++)
-                {
-                    bottom = " " + bottom;
-                }
-            }
-            else if (top.Length < bottom.Length){
-                for (int i =0; i<bottom.Length;i++){
-                    padding += "-";
-                }
-                int delta = bottom.Length - top.Length;
-                for (int i = 0; i < delta / 2; i++)
-                {
-                    top = " " + top;
-                }
-
-            }
-            else {
-                for (int i =0;i<bottom.Length;i++){
-                    padding += "-";
-                }
-            }
-            return top+"\n"+padding+"\n"+bottom;
-        }
-        /// <summary>
-        /// converts the number to a string
-        /// </summary>
-        /// <returns>the number pretty printed</returns>
-        public override string ToString()
-        {
-            return this.PrettyPrint();
-        }
-        /// <summary>
-        /// this reduces the fraction such that gcd(numerator,denominator) = 1
-        /// </summary>
         public void Reduce()
         {
-            Int64 a = this.Numerator;
-            Int64 b = this.Denominator;
+            SignedBigInteger a = this.Numerator;
+            SignedBigInteger b = this.Denominator;
             while (b != 0)
             {
-                Int64 t = b;
+                SignedBigInteger t = b;
                 b = a % b;
                 a = t;
             }
-            this.Numerator = this.Numerator / a;
-            
-            this.Denominator = this.Denominator / a;
-            if (this.Numerator < 0 && this.Denominator < 0)
-            {
-                this.Numerator = Math.Abs(this.Numerator);
-                this.Denominator = Math.Abs(this.Denominator);
-            }
-            else if (this.Denominator < 0)
+            this.Numerator /= a;
+            this.Denominator /= a;
+            if (this.Denominator.Negative)
             {
                 this.Numerator *= -1;
                 this.Denominator *= -1;
             }
-            
         }
-        /// <summary>
-        /// this clones the rational number
-        /// </summary>
-        /// <returns>an instance of the rational number with the same numerator and denominator</returns>
-        public Rational Clone()
+        public static Rational operator *(Rational a, Rational b)
         {
-            return new Rational(this.Numerator, this.Denominator);
+            Rational r = new Rational(a.Numerator * b.Numerator, b.Denominator * a.Denominator);
+            r.Reduce();
+            return r;
         }
-        public static implicit operator Rational(Int64 a)
+        public static Rational operator /(Rational a, Rational b)
         {
-            return new Rational(a);
+            Rational r = new Rational(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+            r.Reduce();
+            return r;
+        }
+        public static Rational operator +(Rational a, Rational b)
+        {
+            SignedBigInteger commonbase = a.Denominator * b.Denominator;
+            SignedBigInteger atop = a.Numerator * b.Denominator;
+            SignedBigInteger btop = b.Numerator * a.Denominator;
+            Rational r = new Rational(atop + btop, commonbase);
+            r.Reduce();
+            return r;
+        }
+        public static Rational operator -(Rational a, Rational b)
+        {
+            SignedBigInteger commonbase = a.Denominator * b.Denominator;
+            SignedBigInteger atop = a.Numerator * b.Denominator;
+            SignedBigInteger btop = b.Numerator * a.Denominator;
+            Rational r = new Rational(atop - btop, commonbase);
+            r.Reduce();
+            return r;
+        }
+        public static bool operator ==(Rational a, Rational b)
+        {
+            SignedBigInteger lhs = a.Numerator * b.Denominator;
+            SignedBigInteger rhs = b.Numerator * a.Denominator;
+            return lhs == rhs;
+        }
+        public static bool operator !=(Rational a, Rational b)
+        {
+            return !(a == b);
+        }
+        public static bool operator <(Rational a, Rational b)
+        {
+            SignedBigInteger lhs = a.Numerator * b.Denominator;
+            SignedBigInteger rhs = b.Numerator * a.Denominator;
+            return lhs < rhs;
+        }
+        public static bool operator >(Rational a, Rational b)
+        {
+            SignedBigInteger lhs = a.Numerator * b.Denominator;
+            SignedBigInteger rhs = b.Numerator * a.Denominator;
+            return lhs > rhs;
+        }
+        public static bool operator >=(Rational a, Rational b)
+        {
+            SignedBigInteger lhs = a.Numerator * b.Denominator;
+            SignedBigInteger rhs = b.Numerator * a.Denominator;
+            return lhs >= rhs;
+        }
+        public static bool operator <=(Rational a, Rational b)
+        {
+            SignedBigInteger lhs = a.Numerator * b.Denominator;
+            SignedBigInteger rhs = b.Numerator * a.Denominator;
+            return lhs <= rhs;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() == this.GetType())
+            {
+                return (Rational)obj == this;
+            }
+            if (obj.GetType() == 1.GetType())
+            {
+                return (int)obj == this;
+            }
+            if (obj.GetType() == 1L.GetType())
+            {
+                return (long)obj == this;
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return Numerator.Number.GetBytes()[0];
         }
         public static implicit operator Rational(int a)
         {
             return new Rational(a);
         }
-        public static Rational operator *(Rational a, Rational b)
+        public static implicit operator Rational(long a)
         {
-            Rational result = new Rational(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
-            result.Reduce();
-            return result;
-        }
-        public static Rational operator /(Rational a, Rational b)
-        {
-            Rational result = new Rational(a.Numerator * b.Denominator, b.Numerator * a.Denominator);
-            result.Reduce();
-            return result;
-        }
-        public static Rational operator +(Rational a, Rational b)
-        {
-            Int64 commonbase = a.Denominator * b.Denominator;
-            if (a.Numerator == 0)
-            {
-                return b;
-            }
-            if (b.Numerator == 0)
-            {
-                return a;
-            }
-            Int64 top = (a.Numerator * b.Denominator)+(b.Numerator*a.Denominator);
-            Rational result = new Rational(top, commonbase);
-            result.Reduce();
-            return result;
-        }
-        public static Rational operator -(Rational a, Rational b)
-        {
-            if (a.Numerator == 0)
-            {
-                return -1 * b;
-            }
-            if (b.Numerator == 0)
-            {
-                return a;
-            }
-            Int64 commonbase = a.Denominator * b.Denominator;
-            Int64 top = (a.Numerator * b.Denominator) - (b.Numerator * a.Denominator);
-            Rational result = new Rational(top, commonbase);
-            result.Reduce();
-            return result;
-        }
-        public static bool operator ==(Rational a, Rational b)
-        {
-            Rational r_1 = a.Clone();
-            Rational r_2 = b.Clone();
-            r_1.Reduce();
-            r_2.Reduce();
-            return (r_1.Numerator == r_2.Numerator && r_1.Denominator == r_2.Denominator);
-            
-             
-        }
-        public static bool operator !=(Rational a, Rational b)
-        {
-            Rational r_1 = a.Clone();
-            Rational r_2 = b.Clone();
-            r_1.Reduce();
-            r_2.Reduce();
-            return (r_1.Numerator != r_2.Numerator || r_1.Denominator != r_2.Denominator);
-        }
-        public static bool operator >(Rational a, Rational b)
-        {
-            Rational r_1 = a.Clone();
-            Rational r_2 = b.Clone();
-            r_1.Reduce();
-            r_2.Reduce();
-            Int64 lhs = r_1.Numerator * r_2.Denominator;
-            Int64 rhs = r_2.Numerator * r_1.Denominator;
-            return (lhs > rhs);
-        }
-        public static bool operator <(Rational a, Rational b)
-        {
-            Rational r_1 = a.Clone();
-            Rational r_2 = b.Clone();
-            r_1.Reduce();
-            r_2.Reduce();
-            Int64 lhs = r_1.Numerator * r_2.Denominator;
-            Int64 rhs = r_2.Numerator * r_1.Denominator;
-            return (lhs < rhs);
-        }
-        public static bool operator >=(Rational a, Rational b)
-        {
-            Rational r_1 = a.Clone();
-            Rational r_2 = b.Clone();
-            r_1.Reduce();
-            r_2.Reduce();
-            Int64 lhs = r_1.Numerator * r_2.Denominator;
-            Int64 rhs = r_2.Numerator * r_1.Denominator;
-            return (lhs >= rhs);
-        }
-        public static bool operator <=(Rational a, Rational b)
-        {
-            Rational r_1 = a.Clone();
-            Rational r_2 = b.Clone();
-            r_1.Reduce();
-            r_2.Reduce();
-            Int64 lhs = r_1.Numerator * r_2.Denominator;
-            Int64 rhs = r_2.Numerator * r_1.Denominator;
-            return (lhs <= rhs);
-        }
-        public override bool Equals(object obj)
-        {
-            if (obj.GetType() == 1.GetType())
-            {
-                return (int)obj == this;
-            }
-            return (Rational)obj == this;
-            
-        }
-        public override int GetHashCode()
-        {
-            return (int)((this.Denominator-this.Numerator)%Math.Pow(2,32));
+            return new Rational(a);
         }
     }
 }
