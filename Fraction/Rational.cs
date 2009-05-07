@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Mono.Math;
 
 namespace PrecMaths
 {
@@ -28,6 +29,48 @@ namespace PrecMaths
         {
             this.Numerator = Numerator.Clone();
             this.Denominator = 1;
+        }
+        public double Evaluate()
+        {
+            if ((Numerator / Denominator).Number > new BigInteger(ulong.MaxValue))
+            {
+                throw new InvalidOperationException("evaluation cannot be done on huge values");
+            }
+            else
+            {
+                this.Reduce();
+                bool negative = Numerator.Negative;
+                BigInteger p1 = Numerator.Number;
+                BigInteger p2 = Denominator.Number;
+                byte[] beforepoint = (p1 / p2).GetBytes();
+                double result = 0;
+                for (int i = 0; i < beforepoint.Length; i++)
+                {
+                    result += beforepoint[i] << (8 * i);
+                }
+                BigInteger remainder = p1 % p2;
+                int shifts = 0;
+                for (int i = 0; i < 64; i++)
+                {
+                    remainder *= 10;
+                    shifts += 1;
+                    byte[] some_more_juice = (remainder/p2).GetBytes();
+                    for (int j = 0; j < some_more_juice.Length; j++)
+                    {
+                        result += (float)some_more_juice[j] / (Math.Pow(10,shifts));
+                    }
+                    remainder = remainder % p2;
+                }
+                if (negative)
+                {
+                    return -1 * result;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+
         }
         public void Reduce()
         {

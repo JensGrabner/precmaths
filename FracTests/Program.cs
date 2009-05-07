@@ -3,25 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using PrecMaths;
 using NUnit.Framework;
+using Mono.Math;
 
 namespace FracTests
 {
-    [TestFixture]
-    class TestRunner
+    class program
     {
-        [Test]
-        public void FracInitialiseFromInt()
+        public static void Main()
         {
-            Rational r = 4;
-            Assert.AreEqual(r.Numerator, 4);
-            Assert.AreEqual(r.Denominator, 1);
-        }
-        public void FracInitialiseFromLong()
-        {
-            Rational r = (long)12388888888888;
-            Assert.AreEqual(r.Numerator, (long)12388888888888);
-            Assert.AreEqual(r.Denominator, 1);
-
+            Rational e = new Rational(1, 2);
+            Console.WriteLine(e.Evaluate());
+            e = new Rational(1, 3);
+            Console.WriteLine(e.Evaluate());
+            Console.ReadLine();
         }
     }
 }
