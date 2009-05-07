@@ -14,8 +14,19 @@ namespace PrecMaths
     /// </summary>
     public class Rational
     {
+        /// <summary>
+        /// this represents the numerator of the number
+        /// </summary>
         public SignedBigInteger Numerator;
+        /// <summary>
+        /// this represents the denominator of the number
+        /// </summary>
         public SignedBigInteger Denominator;
+        /// <summary>
+        /// this initialises the rational number
+        /// </summary>
+        /// <param name="Numerator">the numerator of the number</param>
+        /// <param name="Denominator">the denominator of the number, cannot be zero</param>
         public Rational(SignedBigInteger Numerator, SignedBigInteger Denominator)
         {
             this.Numerator = Numerator.Clone();
@@ -25,11 +36,19 @@ namespace PrecMaths
                 throw new ArgumentOutOfRangeException("denominators of rationals cannot be zero");
             }
         }
+        /// <summary>
+        /// this initialises the rational number, with a denominator of one
+        /// </summary>
+        /// <param name="Numerator">The numerator</param>
         public Rational(SignedBigInteger Numerator)
         {
             this.Numerator = Numerator.Clone();
             this.Denominator = 1;
         }
+        /// <summary>
+        /// this evaluates the rational number to double precision
+        /// </summary>
+        /// <returns>a double representing an approximation of the number</returns>
         public double Evaluate()
         {
             if ((Numerator / Denominator).Number > new BigInteger(ulong.MaxValue))
@@ -72,6 +91,9 @@ namespace PrecMaths
             }
 
         }
+        /// <summary>
+        /// this reduces the rational number such that gcd(Numerator,Denominator) == 1
+        /// </summary>
         public void Reduce()
         {
             SignedBigInteger a = this.Numerator;
