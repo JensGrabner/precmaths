@@ -57,7 +57,7 @@ namespace PrecMaths
                     byte[] some_more_juice = (remainder/p2).GetBytes();
                     for (int j = 0; j < some_more_juice.Length; j++)
                     {
-                        result += (float)some_more_juice[j] / (Math.Pow(10,shifts));
+                        result += (double)some_more_juice[j] / (Math.Pow(10,shifts));
                     }
                     remainder = remainder % p2;
                 }
