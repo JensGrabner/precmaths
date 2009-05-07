@@ -129,8 +129,6 @@ namespace RationalTests
         {
             Rational r = new Rational(1, 3);
             r += new Rational(1, 4);
-            Console.WriteLine(r.Numerator.Number);
-            Console.WriteLine(r.Denominator.Number);
             Assert.AreEqual(new Rational(7, 12), r);
             r += new Rational(-3, 4);
             Assert.AreEqual(new Rational(-2, 12), r);
@@ -176,6 +174,8 @@ namespace RationalTests
             Console.WriteLine(e.Evaluate());
             e = new Rational(3, 2);
             Assert.AreEqual(1.5, e.Evaluate());
+            e = new Rational(-3, 2);
+            Assert.AreEqual(-1.5, e.Evaluate());
             
         }
     }
