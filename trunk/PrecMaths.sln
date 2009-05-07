@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrecMaths", "Fraction\PrecM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RationalTests", "RationalTests\RationalTests.csproj", "{D8FEF5AA-25F4-44D9-8B12-31DEADD21383}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FracTests", "FracTests\FracTests.csproj", "{97B2A5F0-E28D-4137-AF9F-B71C1782EABF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{D8FEF5AA-25F4-44D9-8B12-31DEADD21383}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8FEF5AA-25F4-44D9-8B12-31DEADD21383}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8FEF5AA-25F4-44D9-8B12-31DEADD21383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97B2A5F0-E28D-4137-AF9F-B71C1782EABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97B2A5F0-E28D-4137-AF9F-B71C1782EABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97B2A5F0-E28D-4137-AF9F-B71C1782EABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97B2A5F0-E28D-4137-AF9F-B71C1782EABF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

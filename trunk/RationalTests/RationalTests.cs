@@ -166,5 +166,17 @@ namespace RationalTests
             Assert.AreEqual(new BigInteger(1), r.Numerator.Number);
             Assert.AreEqual(new BigInteger(6), r.Denominator.Number);
         }
+        [Test]
+        public void EvaluateTest()
+        {
+            Rational e = new Rational(1, 2);
+            Assert.AreEqual(0.5, e.Evaluate());
+            e = new Rational(1, 3);
+            Assert.AreEqual(Math.Round(1.0 / 3.0,4), Math.Round(e.Evaluate(),4));
+            Console.WriteLine(e.Evaluate());
+            e = new Rational(3, 2);
+            Assert.AreEqual(1.5, e.Evaluate());
+            
+        }
     }
 }
