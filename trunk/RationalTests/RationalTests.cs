@@ -168,14 +168,19 @@ namespace RationalTests
         public void EvaluateTest()
         {
             Rational e = new Rational(1, 2);
-            Assert.AreEqual(0.5, e.Evaluate());
+            Assert.AreEqual(0.5, e.EvaluateDecimal());
             e = new Rational(1, 3);
-            Assert.AreEqual(Math.Round(1.0 / 3.0, 15), Math.Round(e.Evaluate(), 15));
-            Console.WriteLine(e.Evaluate());
+            Assert.AreEqual(Math.Round(1.0 / 3.0, 15), Math.Round(e.EvaluateDecimal(), 15));
+            Console.WriteLine(e.EvaluateDecimal());
             e = new Rational(3, 2);
-            Assert.AreEqual(1.5, e.Evaluate());
+            Assert.AreEqual(1.5, e.EvaluateDecimal());
             e = new Rational(-3, 2);
-            Assert.AreEqual(-1.5, e.Evaluate());
+            Assert.AreEqual(-1.5, e.EvaluateDecimal());
+            
+            Assert.AreEqual("0.500", new Rational(1, 2).EvaluateString(3));
+            Assert.AreEqual("1.500", new Rational(3, 2).EvaluateString(3));
+            Assert.AreEqual("-158.883", new Rational(-158883, 1000).EvaluateString(3));
+            Assert.AreEqual(-158.883m, new Rational(-158883, 1000).EvaluateDecimal());
             
         }
     }
