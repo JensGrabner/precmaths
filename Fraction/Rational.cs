@@ -45,11 +45,16 @@ namespace PrecMaths
             this.Numerator = Numerator.Clone();
             this.Denominator = 1;
         }
+        public Rational Clone()
+        {
+            return new Rational(this.Numerator, this.Denominator);
+        }
+        
         /// <summary>
-        /// this evaluates the rational number to double precision
+        /// evaluates the rational as a double
         /// </summary>
-        /// <returns>a double representing an approximation of the number</returns>
-        public double Evaluate()
+        /// <returns>a double approximation of the rational</returns>
+        public double EvaluateDouble()
         {
             if ((Numerator / Denominator).Number > new BigInteger(ulong.MaxValue))
             {
@@ -69,14 +74,104 @@ namespace PrecMaths
                 }
                 BigInteger remainder = p1 % p2;
                 int shifts = 0;
-                for (int i = 0; i < 64; i++)
+                for (int i = 0; i < 24; i++)
                 {
                     remainder *= 10;
                     shifts += 1;
                     byte[] some_more_juice = (remainder/p2).GetBytes();
                     for (int j = 0; j < some_more_juice.Length; j++)
                     {
-                        result += (double)some_more_juice[j] / (Math.Pow(10,shifts));
+                        result += (double)some_more_juice[j] / (double)(Math.Pow(10,shifts));
+                    }
+                    remainder = remainder % p2;
+                }
+                if (negative)
+                {
+                    return -1 * result;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+
+        }
+
+        public string EvaluateString(int precision)
+        {
+            if ((Numerator / Denominator).Number > new BigInteger(ulong.MaxValue))
+            {
+                throw new InvalidOperationException("evaluation cannot be done on huge values");
+            }
+            else
+            {
+                this.Reduce();
+                bool negative = Numerator.Negative;
+                BigInteger p1 = Numerator.Number;
+                BigInteger p2 = Denominator.Number;
+                byte[] beforepoint = (p1 / p2).GetBytes();
+                string result = "";
+                int build = 0;
+                for (int i = 0; i < beforepoint.Length; i++)
+                {
+                    build += beforepoint[i] << (8 * i);
+                }
+                result += build.ToString() + ".";
+                BigInteger remainder = p1 % p2;
+                int shifts = 0;
+                for (int i = 0; i < precision; i++)
+                {
+                    remainder *= 10;
+                    shifts += 1;
+                    byte[] some_more_juice = (remainder / p2).GetBytes();
+                    for (int j = 0; j < some_more_juice.Length; j++)
+                    {
+                        result += some_more_juice[j];
+                    }
+                    remainder = remainder % p2;
+                }
+                if (negative)
+                {
+                    return "-" + result;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+        }
+        /// <summary>
+        /// evaluates the rational to a decimal
+        /// </summary>
+        /// <returns>a decimal approximation of the number</returns>
+        public Decimal EvaluateDecimal()
+        {
+            if ((Numerator / Denominator).Number > new BigInteger(ulong.MaxValue))
+            {
+                throw new InvalidOperationException("evaluation cannot be done on huge values");
+            }
+            else
+            {
+                this.Reduce();
+                bool negative = Numerator.Negative;
+                BigInteger p1 = Numerator.Number;
+                BigInteger p2 = Denominator.Number;
+                byte[] beforepoint = (p1 / p2).GetBytes();
+                decimal result = 0;
+                for (int i = 0; i < beforepoint.Length; i++)
+                {
+                    result += beforepoint[i] << (8 * i);
+                }
+                BigInteger remainder = p1 % p2;
+                int shifts = 0;
+                for (int i = 0; i < 20; i++)
+                {
+                    remainder *= 10;
+                    shifts += 1;
+                    byte[] some_more_juice = (remainder/p2).GetBytes();
+                    for (int j = 0; j < some_more_juice.Length; j++)
+                    {
+                        result += (decimal)some_more_juice[j] / (decimal)(Math.Pow(10,shifts));
                     }
                     remainder = remainder % p2;
                 }
@@ -94,7 +189,7 @@ namespace PrecMaths
         /// <summary>
         /// this reduces the rational number such that gcd(Numerator,Denominator) == 1
         /// </summary>
-        public void Reduce()
+        public Rational Reduce()
         {
             SignedBigInteger a = this.Numerator;
             SignedBigInteger b = this.Denominator;
@@ -111,6 +206,7 @@ namespace PrecMaths
                 this.Numerator *= -1;
                 this.Denominator *= -1;
             }
+            return this;
         }
         public static Rational operator *(Rational a, Rational b)
         {

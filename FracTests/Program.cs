@@ -11,10 +11,10 @@ namespace FracTests
     {
         public static void Main()
         {
-            Rational e = new Rational(1, 2);
-            Console.WriteLine(e.Evaluate());
-            e = new Rational(1, 3);
-            Console.WriteLine(e.Evaluate());
+            Rational e = new Rational(2, 1);
+            IrrationalFormA a = new IrrationalFormA(1, e, new Rational(1, 2));
+            Console.WriteLine(a.Evaluate(15));
+            Console.WriteLine("1.41421356");
             Console.ReadLine();
         }
     }
