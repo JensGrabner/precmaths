@@ -99,46 +99,41 @@ namespace PrecMaths
 
         public string EvaluateString(int precision)
         {
-            if ((Numerator / Denominator).Number > new BigInteger(ulong.MaxValue))
+        
+            this.Reduce();
+            bool negative = Numerator.Negative;
+            BigInteger p1 = Numerator.Number;
+            BigInteger p2 = Denominator.Number;
+            byte[] beforepoint = (p1 / p2).GetBytes();
+            string result = "";
+            int build = 0;
+            for (int i = 0; i < beforepoint.Length; i++)
             {
-                throw new InvalidOperationException("evaluation cannot be done on huge values");
+                build += beforepoint[i] << (8 * i);
+            }
+            result += build.ToString() + ".";
+            BigInteger remainder = p1 % p2;
+            int shifts = 0;
+            for (int i = 0; i < precision; i++)
+            {
+                remainder *= 10;
+                shifts += 1;
+                byte[] some_more_juice = (remainder / p2).GetBytes();
+                for (int j = 0; j < some_more_juice.Length; j++)
+                {
+                    result += some_more_juice[j];
+                }
+                remainder = remainder % p2;
+            }
+            if (negative)
+            {
+                return "-" + result;
             }
             else
             {
-                this.Reduce();
-                bool negative = Numerator.Negative;
-                BigInteger p1 = Numerator.Number;
-                BigInteger p2 = Denominator.Number;
-                byte[] beforepoint = (p1 / p2).GetBytes();
-                string result = "";
-                int build = 0;
-                for (int i = 0; i < beforepoint.Length; i++)
-                {
-                    build += beforepoint[i] << (8 * i);
-                }
-                result += build.ToString() + ".";
-                BigInteger remainder = p1 % p2;
-                int shifts = 0;
-                for (int i = 0; i < precision; i++)
-                {
-                    remainder *= 10;
-                    shifts += 1;
-                    byte[] some_more_juice = (remainder / p2).GetBytes();
-                    for (int j = 0; j < some_more_juice.Length; j++)
-                    {
-                        result += some_more_juice[j];
-                    }
-                    remainder = remainder % p2;
-                }
-                if (negative)
-                {
-                    return "-" + result;
-                }
-                else
-                {
-                    return result;
-                }
+                return result;
             }
+        
         }
         /// <summary>
         /// evaluates the rational to a decimal
