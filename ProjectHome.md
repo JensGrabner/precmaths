@@ -1,0 +1,1 @@
+This library handles rational numbers automatically using bigintegers that are built into mono. It provides evaluate functions to extract the decimal values of these numbers to double accuracy
